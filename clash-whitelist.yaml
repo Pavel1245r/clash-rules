@@ -1,0 +1,134 @@
+# Собрано автоматически из https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.JSON
+# Профиль: RoscomVPN Whitelist, LastUpdated: 1793875687. Не править вручную — см. gen.py.
+
+hosts:
+  "lkfl2.nalog.ru": "213.24.64.175"
+  "lknpd.nalog.ru": "213.24.64.181"
+
+dns:
+  enable: true
+  ipv6: false
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:site-private
+  default-nameserver:
+    - https://77.88.8.8/dns-query
+    - https://8.8.8.8/dns-query
+  proxy-server-nameserver:
+    - https://77.88.8.8/dns-query
+    - https://8.8.8.8/dns-query
+  direct-nameserver:
+    - https://77.88.8.8/dns-query
+  nameserver:
+    - "https://8.8.8.8/dns-query#PROXY"
+
+sniffer:
+  enable: true
+  override-destination: false
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+    TLS:
+      ports: [443, 8443]
+  skip-dst-address:
+    - 224.0.0.0/3
+    - 10.0.0.0/8
+    - 127.0.0.0/8
+    - 100.64.0.0/10
+    - 172.16.0.0/12
+    - 198.18.0.0/15
+    - 169.254.0.0/16
+    - 192.168.0.0/16
+    - fc00::/7
+    - fe80::/10
+
+proxy-groups:
+  - name: 🛡️ VPN
+    type: select
+    include-all: true
+    proxies:
+      - ⚡️ Авто
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hijacking.png
+  - name: ⚡️ Авто
+    type: url-test
+    include-all: true
+    hidden: true
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 150
+  - name: PROXY
+    type: select
+    hidden: true
+    proxies:
+      - 🛡️ VPN
+
+rule-providers:
+  site-win-spy:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/site-win-spy.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/win-spy.mrs
+  site-torrent:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/site-torrent.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/torrent.mrs
+  site-category-ads:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/site-category-ads.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/category-ads.mrs
+  site-private:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/site-private.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/private.mrs
+  site-whitelist:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/site-whitelist.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/whitelist.mrs
+  ip-private:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/ip-private.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip/release/mihomo/private.mrs
+  ip-whitelist:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    proxy: ⚡️ Авто
+    path: ./ruleset/ip-whitelist.mrs
+    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip/release/mihomo/whitelist.mrs
+
+rules:
+  - RULE-SET,site-win-spy,REJECT
+  - RULE-SET,site-torrent,REJECT
+  - RULE-SET,site-category-ads,REJECT
+  - RULE-SET,site-private,DIRECT
+  - RULE-SET,site-whitelist,DIRECT
+  - RULE-SET,ip-private,DIRECT,no-resolve
+  - RULE-SET,ip-whitelist,DIRECT
+  - MATCH,PROXY

@@ -1,0 +1,29 @@
+# Раз в сутки сверяет шаблон с профилем Happ «RoscomVPN Whitelist» у автора и обновляет clash-whitelist.yaml.
+name: sync-whitelist
+
+on:
+  schedule:
+    - cron: "17 3 * * *"   # 03:17 UTC ежедневно
+  workflow_dispatch:        # ручной запуск: Actions → sync-whitelist → Run workflow
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Собрать шаблон
+        run: python gen.py
+      - name: Сохранить, если изменился
+        run: |
+          if git diff --quiet; then echo "без изменений"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add clash-whitelist.yaml
+          git commit -m "sync: RoscomVPN Whitelist"
+          git push
