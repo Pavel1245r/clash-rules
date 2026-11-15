@@ -8,7 +8,7 @@
   * RouteOrder (например block-proxy-direct) — порядок групп правил;
   * DomainStrategy IPIfNonMatch — сначала все правила по доменам, потом по IP;
   * GlobalProxy true — всё, что не попало в правила, идёт через VPN.
-Сами списки доменов/IP Mihomo качает у автора (roscomvpn-geosite / roscomvpn-geoip), поэтому они всегда свежие.
+Сами списки доменов/IP Mihomo качает напрямую с нашего сервера: он раз в сутки зеркалит их у автора (roscomvpn-geosite / roscomvpn-geoip).
 """
 import json
 import sys
@@ -16,8 +16,10 @@ import urllib.request
 
 SRC = "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.JSON"
 OUT = "clash-whitelist.yaml"
-GEOSITE = "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/{}.mrs"
-GEOIP = "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip/release/mihomo/{}.mrs"
+# Списки берутся с зеркала на своём сервере (его раз в сутки обновляет sync-clash-rules),
+# чтобы клиенту не нужен был jsdelivr и уже работающий прокси.
+GEOSITE = "https://woksonbokson.duckdns.org/rules/roscomvpn-geosite-{}.mrs"
+GEOIP = "https://woksonbokson.duckdns.org/rules/roscomvpn-geoip-{}.mrs"
 TARGET = {"block": "REJECT", "proxy": "PROXY", "direct": "DIRECT"}
 
 
@@ -97,7 +99,7 @@ def build(p):
     y.append("rule-providers:")
     for key, (behavior, url) in providers.items():
         y += [f"  {key}:", "    type: http", f"    behavior: {behavior}", "    format: mrs",
-              "    interval: 86400", "    proxy: ⚡️ Авто", f"    path: ./ruleset/{key}.mrs", f"    url: {url}"]
+              "    interval: 86400", "    proxy: DIRECT", f"    path: ./ruleset/{key}.mrs", f"    url: {url}"]
     y += ["", "rules:"] + [f"  - {r}" for r in site_rules + ip_rules] + [f"  - MATCH,{final}", ""]
     return "\n".join(y)
 
