@@ -1,5 +1,5 @@
 # Собрано автоматически из https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.JSON
-# Профиль: RoscomVPN Whitelist, LastUpdated: 1793875687. Не править вручную — см. gen.py.
+# Профиль: RoscomVPN Whitelist, LastUpdated: 1794651487. Не править вручную — см. gen.py.
 
 hosts:
   "lkfl2.nalog.ru": "213.24.64.175"
@@ -71,57 +71,57 @@ rule-providers:
     behavior: domain
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/site-win-spy.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/win-spy.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geosite-win-spy.mrs
   site-torrent:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/site-torrent.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/torrent.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geosite-torrent.mrs
   site-category-ads:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/site-category-ads.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/category-ads.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geosite-category-ads.mrs
   site-private:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/site-private.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/private.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geosite-private.mrs
   site-whitelist:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/site-whitelist.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite/release/mihomo/whitelist.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geosite-whitelist.mrs
   ip-private:
     type: http
     behavior: ipcidr
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/ip-private.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip/release/mihomo/private.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geoip-private.mrs
   ip-whitelist:
     type: http
     behavior: ipcidr
     format: mrs
     interval: 86400
-    proxy: ⚡️ Авто
+    proxy: DIRECT
     path: ./ruleset/ip-whitelist.mrs
-    url: https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip/release/mihomo/whitelist.mrs
+    url: https://woksonbokson.duckdns.org/rules/roscomvpn-geoip-whitelist.mrs
 
 rules:
   - RULE-SET,site-win-spy,REJECT
